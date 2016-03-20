@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public class SurfaceCreator : MonoBehaviour
 {
+
+//    public Texture2D grass;
     [Range(1, 200)]
     public int resolution = 17;
+
+    public int alphaResolution = 17;
     public int size = 256;
 
     public float frequency = 1f;
@@ -18,6 +22,7 @@ public class SurfaceCreator : MonoBehaviour
     [Range(0f, 1f)]
     public float persistence = 0.5f;
 
+    private SurfaceVisualSettings settings;
     public int seed = 1000;
     public int height = 1;
     private const int ChunksNumber = 3;
@@ -36,6 +41,7 @@ public class SurfaceCreator : MonoBehaviour
     void Start()
     {
         prefab = (Transform)Instantiate(prefab, new Vector3(ChunksNumber*size/2, 10, ChunksNumber*size/2), Quaternion.identity);
+        settings = GetComponent<SurfaceVisualSettings>();
         diagSize = size*Mathf.Sqrt(2);
         perlin = new PerlinNoise(new PerlinHash(256,seed).generate(),frequency,octaves,lacunarity,persistence);
         GenerateTerrain();
@@ -67,17 +73,25 @@ public class SurfaceCreator : MonoBehaviour
                 }
                 else
                 {
-                    int empty;
-                    if (newPosition.x > currentChunk.Position.x || newPosition.z > currentChunk.Position.z)
-                        empty = -size;
+                    int xSize;
+                    int zSize;
+                    if (newPosition.z > currentChunk.Position.z)
+                    {
+                        zSize = -size;
+                    }
                     else
-                        empty = size;
-                        newPosition =
-                            new Vector3(Mathf.Floor(newPosition.x + empty), 0,Mathf.Floor(newPosition.z + empty));
+                    {
+                        zSize = size;
+                    }
+                    if (newPosition.x > currentChunk.Position.x)
+                        xSize = -size;
+                    else
+                        xSize = size;
+                        newPosition = new Vector3(Mathf.Floor(newPosition.x + xSize), 0,Mathf.Floor(newPosition.z + zSize));
                 }
 
                 Debug.LogFormat("new {0} old {1}",newPosition,chunk.Position);
-                var newChunk = new SurfaceChunk(newPosition, size, height, resolution,perlin,perlin2);
+                var newChunk = new SurfaceChunk(newPosition, size, height, resolution,alphaResolution,perlin,settings);
                 surfaceChunks.Add(newChunk);
                 newChunk.Draw();
             }
@@ -90,7 +104,7 @@ public class SurfaceCreator : MonoBehaviour
         {
             for (int z = 0; z < ChunksNumber*size; z += size)
             {
-                var chunk = new SurfaceChunk(new Vector3(x,0,z),size,height,resolution,perlin,perlin2);
+                var chunk = new SurfaceChunk(new Vector3(x,0,z),size,height,resolution,alphaResolution,perlin,settings);
                 chunk.Draw();
                 surfaceChunks.Add(chunk);
             }
