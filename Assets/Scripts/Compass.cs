@@ -7,7 +7,7 @@ public class Compass : MonoBehaviour {
 	public Texture compassBackground;
 	public Texture pointer;
 
-	public Transform chest;
+	private Vector2 destination;
 
 	void OnGUI () {
 		GUI.DrawTexture (new Rect (0, 0, 120, 120), compassBackground);
@@ -16,8 +16,9 @@ public class Compass : MonoBehaviour {
 		//draw pointer
 		float absoluteAngle, angle, playerAngle;
 
-		Vector3 dir = chest.transform.position - player.transform.position;
-		absoluteAngle = Mathf.Atan2 (dir.x, dir.z) * Mathf.Rad2Deg;
+		Vector3 dir = destination - new Vector2(player.transform.position.x, 
+						player.transform.position.z);
+		absoluteAngle = Mathf.Atan2 (dir.x, dir.y) * Mathf.Rad2Deg;
 		playerAngle = player.eulerAngles.y;
 
 		angle = playerAngle - absoluteAngle;
@@ -32,6 +33,8 @@ public class Compass : MonoBehaviour {
 
 	}
 
-
+	public void setDestination(Vector2 destination){
+		this.destination = destination;
+	}
 
 }
