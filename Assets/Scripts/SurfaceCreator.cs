@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class SurfaceCreator : MonoBehaviour
 {
-    public Transform prefab;
+    public Transform playerCreature;
 
     private SurfaceVisualSettings settings;
     private const int ChunksNumber = 3;
@@ -16,8 +16,9 @@ public class SurfaceCreator : MonoBehaviour
     void Start()
     {
         settings = GetComponent<SurfaceVisualSettings>();
-        prefab = (Transform)Instantiate(prefab, new Vector3(ChunksNumber*settings.size/2, 10, ChunksNumber*settings.size/2), Quaternion.identity);
-        diagSize = settings.size*Mathf.Sqrt(2);
+		//playerCreature = (Transform)Instantiate(playerCreature, new Vector3(ChunksNumber*settings.size/2, 10, ChunksNumber*settings.size/2), Quaternion.identity);
+		playerCreature.position = new Vector3(ChunksNumber*settings.size/2, 10, ChunksNumber*settings.size/2);
+		diagSize = settings.size*Mathf.Sqrt(2);
         GenerateTerrain();
     }
 
@@ -101,7 +102,7 @@ public class SurfaceCreator : MonoBehaviour
     {
         get
         {
-            var pos = prefab.Find("monster1AnimsNormal").transform.position;
+            var pos = playerCreature.transform.position;
             return new Vector2(pos.x, pos.z);
         }
 
