@@ -74,6 +74,7 @@ function FixedUpdate()
 	 right = new Vector3(forward.z, 0, -forward.x);
 	 var hor = Input.GetAxis("Horizontal");
 	 var ver = Input.GetAxis("Vertical");
+
 	 var targetDirection : Vector3 = (hor * right) + (ver * forward);
 	 targetDirection = targetDirection.normalized;
 	
@@ -108,10 +109,12 @@ function FixedUpdate()
 		
 		if (targetDirection != Vector3.zero)
 		{
-			var lookrotation2 = Quaternion.LookRotation(targetDirection,Vector3.up);
-			lookrotation2.x = 0;
- 	 		lookrotation2.z = 0;
-			transform.rotation = Quaternion.Lerp(transform.rotation,lookrotation2,Time.deltaTime * rotateSpeed);
+		    if(ver >= 0){
+				var lookrotation2 = Quaternion.LookRotation(targetDirection,Vector3.up);
+				lookrotation2.x = 0;
+ 	 			lookrotation2.z = 0;
+				transform.rotation = Quaternion.Lerp(transform.rotation,lookrotation2,Time.deltaTime * rotateSpeed);
+			}
 		}
 	 }
 	

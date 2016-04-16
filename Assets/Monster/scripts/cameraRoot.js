@@ -31,13 +31,17 @@ function Start () {
 }
 
 function LateUpdate () {
+
     if (target) {
-        x += Input.GetAxis("Mouse X") * xSpeed * 0.02;
-        y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02;
- 		
- 		y = ClampAngle(y, yMinLimit, yMaxLimit);
+        //x += Input.GetAxis("Mouse X") * xSpeed * 0.02;
+        //y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02;
+
+        y = target.eulerAngles.y;
+
+ 		//y = ClampAngle(y, yMinLimit, yMaxLimit);
  		       
-        var rotation = Quaternion.Euler(y, x, 0);
+        //var rotation = Quaternion.Euler(y, x, 0);
+        var rotation = Quaternion.Euler(20, y, 0);
         var targetPos = target.position + targetOffset;
         var direction = rotation * -Vector3.forward;
 		
