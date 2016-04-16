@@ -21,7 +21,7 @@ public class Compass : MonoBehaviour {
 		playerAngle = player.eulerAngles.y;
 
 		angle = playerAngle - absoluteAngle;
-
+		angle = 360 - angle;
 
 		Matrix4x4 matrixBackup = GUI.matrix;
 		GUIUtility.RotateAroundPivot(angle, new Vector2(60, 60));
