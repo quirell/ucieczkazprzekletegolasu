@@ -33,7 +33,7 @@ public class SurfaceCreator : MonoBehaviour
                 middlePos = toRemove.Find(c => Mathf.Abs(Vector3.Distance(currentChunk.Position, c.Position) - diagSize*2f) < 1).Position;
             foreach (var chunk in toRemove)
             {
-				Destroy(chunk.Terrain.gameObject);
+                Destroy(chunk.terrain.gameObject);
                 surfaceChunks.Remove(chunk);
                 var newPosition = -chunk.Position + 2*currentChunk.Position; //odbicie lustrzane względem układu współrzędnych o środku w punkcie currentChunk
                 if (toRemove.Count == 3)

@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 class SurfaceChunk
 {
-    public Terrain Terrain { get; private set; }
+    public Terrain terrain { get; private set; }
     public Vector3 Position { get; private set; }
     public Rect Rect { get; private set; }
     private TerrainData terrainData;
@@ -30,7 +30,6 @@ class SurfaceChunk
         terrainData.alphamapResolution = settings.alphaResolution;
         terrainData.size = new Vector3( settings.size, settings.height,  settings.size);
         terrainData.SetAlphamaps(0,0,GenerateAlphaMap());
-        terrainData.SetHeights(0, 0, GenerateHeightMap());
         terrainData.SetDetailResolution(settings.detailResolution,16);
         AddDetails();
         var threshold =  settings.size*sizeMultipler;
@@ -46,12 +45,16 @@ class SurfaceChunk
 
     public void Draw()
     {
-        Terrain = Terrain.CreateTerrainGameObject(terrainData).GetComponent<Terrain>();
-        Terrain.transform.position = Position;
-        Terrain.castShadows = false;
-        Terrain.basemapDistance = 1000;
-        Terrain.detailObjectDistance = 30f;
+        terrain = Terrain.CreateTerrainGameObject(terrainData).GetComponent<Terrain>();
+        terrain.transform.position = Position;
+        terrain.castShadows = false;
+        terrain.basemapDistance = 1000;
+        terrain.detailObjectDistance = 30f;
         AddTrees();
+
+        //moved from PrepareTerrainData for Trees Collider to work
+        //TODO: check if everything is working for sure
+        terrain.terrainData.SetHeights(0, 0, GenerateHeightMap());
     }
 
     private float[,] GenerateHeightMap()
@@ -91,8 +94,8 @@ class SurfaceChunk
 
     private void AddTrees()
     {
-        Terrain.treeBillboardDistance = 50f;
-        Terrain.treeCrossFadeLength = 10f;
+        terrain.treeBillboardDistance = 50f;
+        terrain.treeCrossFadeLength = 10f;
         for (int x = 0; x <  settings.size; x++)
         {
             for (int z = 0; z <  settings.size; z++)
@@ -153,7 +156,7 @@ class SurfaceChunk
         plant.heightScale = 2;
         plant.color = Color.white;
         plant.lightmapColor = Color.white;
-        Terrain.AddTreeInstance(plant);
+        terrain.AddTreeInstance(plant);
     }
 
 }
