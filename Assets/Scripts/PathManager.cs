@@ -5,6 +5,9 @@ public class PathManager : MonoBehaviour {
 
 	public Transform chest;
 	public Transform player;
+
+    public Light light;
+
 	public int pointsToCollect = 6;
 	public float pointsDistance = 15.0F; //represents approximate radius
 
@@ -61,7 +64,13 @@ public class PathManager : MonoBehaviour {
                 chestFound = false;
 
                 audioSource.PlayOneShot (gongSound, volume);
+
+                //lower red and green in light
+
+                light.color -= new Color (0.3F, 0.2F, 0.0F);
+
                 generateNewPoint ();
+
             }
 
 
@@ -83,6 +92,11 @@ public class PathManager : MonoBehaviour {
 
 	}
 
+
+    void OnGUI(){
+        
+        GUI.Label (new Rect (Screen.width - 70, 10, 70, 25), "Score: " + score.ToString());
+    }
 
 
 	private Vector2 positionInCircle(){
