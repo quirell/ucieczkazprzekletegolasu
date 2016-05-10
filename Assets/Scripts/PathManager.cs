@@ -10,6 +10,10 @@ public class PathManager : MonoBehaviour {
 
 	public AudioClip gongSound;
 
+    public bool chestFound;
+
+    public int score = 0;
+
 	private Compass compass;
 	private Vector2 checkpoint;
 	private AudioSource audioSource;
@@ -18,9 +22,12 @@ public class PathManager : MonoBehaviour {
 	private int collectedPoints;
 	private bool chestPoint;
 
+
 	// Use this for initialization
 	void Start () {
 		Random.seed = (int)System.DateTime.Now.Ticks;
+
+        chest.GetComponent<Chest>().pathManager = this;
 
 
 		audioSource = GetComponent<AudioSource>();
@@ -29,8 +36,8 @@ public class PathManager : MonoBehaviour {
 		collectedPoints = 0;
 		chestPoint = false;
 
-		//chest.localScale = new Vector3(0.2F, 0.2F, 0.2F);
-		chest.localScale = new Vector3(0.0F, 0.0F, 0.0F);
+		chest.localScale = new Vector3(0.2F, 0.2F, 0.2F);
+		chest.gameObject.SetActive (false);
 
 		generateNewPoint ();
 
@@ -47,9 +54,18 @@ public class PathManager : MonoBehaviour {
 
 		//Debug.Log (Vector2.Distance(checkpoint, playerCoords));
 
+        if (chestPoint) {
+            if (chestFound) {
+                chestPoint = false;
+                score++;
+                chestFound = false;
+
+                audioSource.PlayOneShot (gongSound, volume);
+                generateNewPoint ();
+            }
 
 
-		if (!chestPoint && Vector2.Distance(checkpoint, playerCoords) < 4.0F) {
+        } else if (Vector2.Distance(checkpoint, playerCoords) < 4.0F) {
 			audioSource.PlayOneShot (gongSound, volume);
 			collectedPoints++;
 
@@ -62,6 +78,7 @@ public class PathManager : MonoBehaviour {
 			}
 
 		}
+
 
 
 	}
@@ -94,9 +111,9 @@ public class PathManager : MonoBehaviour {
 		Vector2 chestPosition = positionInCircle();
 
 		chest.position = new Vector3(chestPosition.x, 40, chestPosition.y);
-		chest.localScale = new Vector3(0.2F, 0.2F, 0.2F);
+        chest.gameObject.SetActive (true);
 
-		compass.setDestination(chestPosition);
+        compass.setDestination(chestPosition);
 	}
 
 }
