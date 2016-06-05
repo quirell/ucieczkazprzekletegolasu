@@ -21,7 +21,7 @@ public class PathManager : MonoBehaviour {
 	private Vector2 checkpoint;
 	private AudioSource audioSource;
 
-	private float volume = 0.45F;
+	private float volume = 0.7F;
 	private int collectedPoints;
 	private bool chestPoint;
 
