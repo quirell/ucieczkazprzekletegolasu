@@ -70,7 +70,7 @@ public class PathManager : MonoBehaviour {
                 //lower red and green in light
                 light.color -= new Color (0.0f, 0.12f, 0.0F);
                 light.intensity -= 0.4f;
-                light.transform.Rotate(-10s ,0,0);
+                light.transform.Rotate(-10,0,0);
 //                light.color -= new Color (0.0f, 0.22f, 0.0F);
 //                light.intensity -= 0.85f;
 //                light.transform.Rotate (-25, 0, 0);
