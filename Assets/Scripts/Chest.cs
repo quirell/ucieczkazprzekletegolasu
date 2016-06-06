@@ -4,19 +4,21 @@ using System.Collections;
 public class Chest : MonoBehaviour {
 
 	public PathManager pathManager;
-    public GameObject explosion;
+    public GameObject explosionPrefab;
+
+	// Store reference to the particular instance
+	GameObject explosionInstance;
+	private float explosionLifetime = 3.0f;
 
 
 	void OnTriggerEnter(Collider other) {
-
+		explosionInstance = Instantiate (explosionPrefab, Vector3.zero, Quaternion.identity) as GameObject;
 
 		//Debug.Log(other.transform.root.gameObject.tag);
 
 		if (other.transform.root.gameObject.tag == "player") {
 
-            //TODO: add sth to do?
-
-            // hide chest
+			// hide chest
             this.gameObject.SetActive(false);
 
             // play explosion
@@ -25,22 +27,19 @@ public class Chest : MonoBehaviour {
             pathManager.chestFound = true;
 		}
 
-
-
 	}
 
+	private void playExplosion() {
+		explosionInstance.transform.position = this.transform.position;
 
-    private void playExplosion() {
-        explosion.transform.position = this.transform.position;
-        explosion.SetActive(true);
-        explosion.GetComponentInChildren<ParticleSystem> ().Stop();
-        explosion.GetComponentInChildren<ParticleSystem> ().transform.localPosition = new Vector3(0,0,0);
-        explosion.GetComponentInChildren<ParticleSystem> ().Emit (1);
+		explosionInstance.SetActive(true);
+		explosionInstance.GetComponentInChildren<ParticleSystem> ().Stop();
+		explosionInstance.GetComponentInChildren<ParticleSystem> ().transform.localPosition = new Vector3(0,0,0);
+		explosionInstance.GetComponentInChildren<ParticleSystem> ().Emit (1);
 
-        // ... nie chce przestac
-        // TODO: emit tylko raz
-        // TODO: wogole nie dziala, particles zostają w starym miejscu...
-
-        
+		Destroy (explosionInstance, explosionLifetime);
+      
     }
+
+
 }

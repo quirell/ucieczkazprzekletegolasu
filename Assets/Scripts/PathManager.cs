@@ -9,7 +9,9 @@ public class PathManager : MonoBehaviour {
     public Light light;
 
     public AudioClip gongSound;
+	public AudioClip explosionSound;
     private float gongVolume = 0.7F;
+	private float explosionVolume = 0.9F;
 
     public int pointsToCollect = 6;
 	public float pointsDistance = 15.0F; //represents approximate radius
@@ -65,7 +67,7 @@ public class PathManager : MonoBehaviour {
                 score++;
                 chestFound = false;
 
-                audioSource.PlayOneShot (gongSound, gongVolume);
+				audioSource.PlayOneShot (explosionSound, explosionVolume);
 
                 //lower red and green in light
                 light.color -= new Color (0.0f, 0.12f, 0.0F);
