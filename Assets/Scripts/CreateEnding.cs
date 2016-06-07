@@ -8,29 +8,29 @@ public class CreateEnding : MonoBehaviour {
 	
 	void OnGUI () {
 		titleStyle.font = (Font)Resources.Load("MagicSchoolTwo");
-		GUI.Label (new Rect (20, 20, 120, 50),
+        GUI.Label (new Rect (0, 40, Screen.width, 40),
                 "Gratulacje! Wygrałeś! Uciekłeś z przerażającego, przeklętego lasu!", 
                 titleStyle);
 
+        GUI.Label (new Rect (0, 300, Screen.width, 40),
+            "Credits:...", 
+            titleStyle);
+        
 		menuStyle.font = (Font)Resources.Load("MagicSchoolTwo");
-	
-		GUI.color = Color.yellow;
-		Rect layerSelectPos = new Rect(30, 120, 120, 40);
+        Rect layerSelectPos = new Rect(0, 200, Screen.width, 40);
 
 		Event curEvent = Event.current;
 		if (layerSelectPos.Contains(curEvent.mousePosition))
-			menuStyle.normal.textColor = Color.white;
+            menuStyle.normal.textColor = Color.gray;
 		else
-			menuStyle.normal.textColor = Color.red;
+            menuStyle.normal.textColor = Color.white;
 
 
-		if (GUI.Button (new Rect (30, 120, 120, 40), "Menu", menuStyle)) {
+        if (GUI.Button (new Rect (0, 200, Screen.width, 40), "Menu", menuStyle)) {
 			SceneManager.LoadScene("menu");
 		}
 
-		GUI.color = Color.yellow;
-		layerSelectPos = new Rect(30, 180, 120, 40);
-	
+            
 	}
 
 }
