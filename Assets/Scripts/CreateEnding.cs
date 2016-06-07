@@ -33,6 +33,8 @@ public class CreateEnding : MonoBehaviour {
 
 
         if (GUI.Button (new Rect (0, 200, Screen.width, 40), "Menu", menuStyle)) {
+            this.gameObject.SetActive (false);
+            Chest.success = true;
 			SceneManager.LoadScene("menu");
 		}
 

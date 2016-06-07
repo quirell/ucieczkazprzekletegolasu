@@ -56,15 +56,12 @@ public class Chest : MonoBehaviour {
     void OnGUI(){
 
         if (actionTime) {
-            if (success) {
-                
-                GUI.Label (new Rect (40, Screen.height / 2 - 30, Screen.width - 40, 60), 
-                    "Press " + actionToMake + "!", textStyle);
-            }else{
-                GUI.Label (new Rect (40, Screen.height / 2 - 30, Screen.width - 40, 60), 
-                    "GAME OVER!", textStyle);
-            }
-
+            
+            GUI.Label (new Rect (40, Screen.height / 2 - 30, Screen.width - 40, 60), 
+                "Press " + actionToMake + "!", textStyle);
+        } else if (!success) {
+            GUI.Label (new Rect (40, Screen.height / 2 - 30, Screen.width - 40, 60), 
+                "GAME OVER!", textStyle);
         }
     }
 
