@@ -40,6 +40,7 @@ public class Chest : MonoBehaviour {
             timeLeft -= Time.deltaTime;
             if (timeLeft < 0) {
                 success = false;
+                actionTime = false;
                 gameOver ();
             }
         }
