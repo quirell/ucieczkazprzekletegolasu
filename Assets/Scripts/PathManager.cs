@@ -145,6 +145,8 @@ public class PathManager : MonoBehaviour {
 	private void generateChest(){
 		Vector2 chestPosition = positionInCircle();
 
+
+        chest.localScale = new Vector3(0.2F, 0.2F, 0.2F);
 		chest.position = new Vector3(chestPosition.x, 40, chestPosition.y);
         chest.gameObject.SetActive (true);
 

@@ -8,9 +8,15 @@ public class CreateEnding : MonoBehaviour {
 	
 	void OnGUI () {
 		titleStyle.font = (Font)Resources.Load("MagicSchoolTwo");
-        GUI.Label (new Rect (0, 40, Screen.width, 40),
+        if (Chest.success) {
+            GUI.Label (new Rect (0, 40, Screen.width, 40),
                 "Gratulacje! Wygrałeś! Uciekłeś z przerażającego, przeklętego lasu!", 
                 titleStyle);
+        } else {
+            GUI.Label (new Rect (0, 40, Screen.width, 40),
+                "O nie, przegrales! Musisz zostać w przerażającym, przeklętym lesie na zawsze!", 
+                titleStyle);
+        }
 
         GUI.Label (new Rect (0, 300, Screen.width, 40),
             "Credits:...", 
