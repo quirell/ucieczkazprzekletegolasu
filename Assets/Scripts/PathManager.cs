@@ -31,6 +31,7 @@ public class PathManager : MonoBehaviour {
     public Transform endLight;
     private bool endGame = false;
 
+    public GUIStyle scoreStyle;
 
 	// Use this for initialization
 	void Start () {
@@ -109,7 +110,7 @@ public class PathManager : MonoBehaviour {
 
     void OnGUI(){
         
-        GUI.Label (new Rect (Screen.width - 70, 10, 70, 25), "Score: " + score.ToString());
+        GUI.Label (new Rect (Screen.width - 90, 20, 60, 25), "Score " + score.ToString(), scoreStyle);
     }
 
 
